@@ -1,4 +1,4 @@
-Titanic_Pipeline_MLOps_Eq3
+Titanic Pipeline
 ==============================
 
 Preparando el proyecto de Titanic para pre-producciónde la experimentación al desarrollo
