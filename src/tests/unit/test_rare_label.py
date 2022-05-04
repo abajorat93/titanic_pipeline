@@ -15,4 +15,4 @@ def test_extract_only_letter(df, result):
     rare_labels = RareLabelCategoricalEncoder(tol=0.02, variables=cat_vars)
     rare_labels.fit(df)
     test_result = rare_labels.transform(df)
-    assert test_result.equals(result)
+    assert df.equals(result)
