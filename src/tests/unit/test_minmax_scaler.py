@@ -1,6 +1,6 @@
 import pytest
 import pandas as pd
-from src.features.min_max_scaler import MinMaxScaler
+from src.training.transformers import MinMaxScaler
 import numpy as np
 
 

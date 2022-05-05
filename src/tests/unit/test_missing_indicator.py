@@ -3,7 +3,7 @@ from sre_constants import CATEGORY_UNI_LINEBREAK
 import numpy as np
 import pandas as pd
 import pytest
-from src.features.missing_indicator import MissingIndicator
+from src.training.transformers import MissingIndicator
 
 
 def obtener_datos_missin_indicator():

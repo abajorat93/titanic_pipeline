@@ -4,7 +4,7 @@ import numpy as np
 import re
 import pytest
 
-from ...features.cabin_only_letter import CabinOnlyLetter
+from src.training.transformers import CabinOnlyLetter
 
 def ExtractOnlyLetter(x):
     if type(x)==str:    

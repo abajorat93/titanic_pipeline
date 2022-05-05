@@ -1,6 +1,6 @@
 import pytest
 import pandas as pd
-from src.features.rare_label_categorial import RareLabelCategoricalEncoder
+from src.training.transformers import RareLabelCategoricalEncoder
 
 
 def GetRareLabelTestData():

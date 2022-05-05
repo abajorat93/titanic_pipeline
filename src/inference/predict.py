@@ -5,6 +5,8 @@ from sklearn.pipeline import Pipeline
 from pydantic import BaseModel
 from fastapi import FastAPI, Depends
 import pandas as pd
+from src.config import config
+
 
 class PredictionInput(BaseModel):
     pclass: int
@@ -29,16 +31,17 @@ class TitanicModel:
     model: Pipeline
     def load_model(self):
         """Loads the model"""
-        model_file = "models/titanic_20220305193145.sav"
+        model_file = config.PRODUCTION_MODEL
         self.model = joblib.load(model_file)
         
     def predict(self, input: PredictionInput) -> PredictionOutput:
         """Runs a prediction"""
         if not self.model:
             raise RuntimeError("Model is not loaded")
-        print([input.dict()])
+        print(f"Raw Input: {input.dict()}")
         df = pd.DataFrame([input.dict()])
         prediction = self.model.predict(df)
+        print(f"Prediction: {prediction}")
         return PredictionOutput(prediction=prediction)
 
 app = FastAPI()

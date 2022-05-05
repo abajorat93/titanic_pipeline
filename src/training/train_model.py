@@ -11,30 +11,29 @@ import pandas as pd
 import numpy as np 
 from datetime import datetime
 
+from src import config
 from sklearn.pipeline import Pipeline
 from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 
-SEED_MODEL = 42
-NUMERICAL_VARS = ['pclass', 'age', 'sibsp', 'parch', 'fare']
-CATEGORICAL_VARS = ['sex', 'cabin', 'embarked', 'title']
-TARGET = 'survived'
+from sklearn.model_selection import train_test_split
+from pathlib import Path
 
 numeric_transformer = Pipeline(steps=[
-    ('missing_indicator', MissingIndicator(NUMERICAL_VARS)),
-    ('median_imputation', NumericalImputesEncoder(NUMERICAL_VARS)),
+    ('missing_indicator', MissingIndicator(config.NUMERICAL_VARS)),
+    ('median_imputation', NumericalImputesEncoder(config.NUMERICAL_VARS)),
 
 ])
 categorical_transformer = Pipeline(steps=[
     ('cabin_only_letter', CabinOnlyLetter('cabin')),
-    ('categorical_imputer', CategoricalImputerEncoder(CATEGORICAL_VARS)),
-    ('rare_labels', RareLabelCategoricalEncoder(tol=0.02,  variables=CATEGORICAL_VARS)),
-    ('dummy_vars', OneHotEncoder(CATEGORICAL_VARS)),
+    ('categorical_imputer', CategoricalImputerEncoder(config.CATEGORICAL_VARS)),
+    ('rare_labels', RareLabelCategoricalEncoder(tol=0.02,  variables=config.CATEGORICAL_VARS)),
+    ('dummy_vars', OneHotEncoder(config.CATEGORICAL_VARS)),
 ])
 column_transformer = ColumnTransformer(
     transformers=[
-        ('num', numeric_transformer, NUMERICAL_VARS),
-        ('cat', categorical_transformer, CATEGORICAL_VARS)],
+        ('num', numeric_transformer, config.NUMERICAL_VARS),
+        ('cat', categorical_transformer, config.CATEGORICAL_VARS)],
     remainder="drop"
 )
 preprocessor = Pipeline(
@@ -44,27 +43,39 @@ preprocessor = Pipeline(
         ('scaling', MinMaxScaler()),
     ]
 )
+if config.MODEL_NAME == 'RandomForest':
+    regressor = RandomForestClassifier(max_depth=4, class_weight='balanced', random_state=config.SEED_MODEL)
+else:
+    regressor = LogisticRegression(C=0.0005, class_weight='balanced', random_state=config.SEED_MODEL)
+
 titanic_pipeline = Pipeline(
     [
         ('preprocessor', preprocessor),
-        ('log_reg', LogisticRegression(C=0.0005, class_weight='balanced', random_state=SEED_MODEL))
+        ('regressor', regressor)
     ]
 )
-URL = 'https://www.openml.org/data/get_csv/16826755/phpMYEkMl'
-df = pd.read_csv(URL)
+df = pd.read_csv(config.DATASET_FILE)
 
-X_train, X_test, y_train, y_test = train_test_split( df.drop(TARGET, axis=1), df[TARGET], test_size=0.2, random_state=SEED_MODEL)
-
+X_train, X_test, y_train, y_test = train_test_split(
+    df.drop(config.TARGET, axis=1), df[config.TARGET], test_size=0.2,
+    random_state=config.SEED_MODEL
+)
 titanic_pipeline.fit(X_train, y_train)
-
 preds = titanic_pipeline.predict(X_test)
-
+print(preds)
 print(f'Accuracy of the model is {(preds == y_test).sum() / len(y_test)}')
-
 
 now = datetime.now()
 date_time = now.strftime("%Y%d%m%H%M%S")
 
-filename = f'titanic_{date_time}.sav'
+filename = f'{config.MODEL_NAME}_{date_time}'
 print(f'Model stored in models as {filename}')
-joblib.dump(titanic_pipeline, f"models/{filename}")
+joblib.dump(titanic_pipeline, f"models/{filename}.sav")
+
+# p = Path(config.DATASETS_DIR, filename)
+# p.mkdir(exist_ok=True)
+# joblib.dump(X_train, f"{p}/X_train.csv")
+# joblib.dump(X_test, f"{p}/X_test.csv")
+# joblib.dump(y_train, f"{p}/y_train.csv")
+# joblib.dump(y_test, f"{p}/y_test.csv")
+
