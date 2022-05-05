@@ -1,10 +1,10 @@
-Titanic Pipeline
+# Titanic Pipeline
 ==============================
 
-# Training
+## Training
 Podemos configurar el training en src-config-config.py
 Podemos iniciar el training con `python -m src.training.train_model`
-# Serving/Inference
+## Serving/Inference
 Podemos iniciar el servidor para las predicciones con `uvicorn src.inference.predict:app --reload`.
 Podemos rquerir una prediccion mandando un POST al http://127.0.0.1:8000/prediction con un JSON en el Body en el siguiente formato:
 ```
