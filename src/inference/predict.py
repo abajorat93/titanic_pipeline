@@ -23,35 +23,45 @@ class PredictionInput(BaseModel):
     body: str
     home_dest: str
 
+
 class PredictionOutput(BaseModel):
     prediction: int
-    
-    
+
+
 class TitanicModel:
     model: Pipeline
+
     def load_model(self):
         """Loads the model"""
         model_file = config.PRODUCTION_MODEL
         self.model = joblib.load(model_file)
-        
+        # Possible Log INFO: Model loaded
+
     def predict(self, input: PredictionInput) -> PredictionOutput:
         """Runs a prediction"""
         if not self.model:
             raise RuntimeError("Model is not loaded")
+        # Log DEBUG:  Raw Input
         print(f"Raw Input: {input.dict()}")
         df = pd.DataFrame([input.dict()])
         prediction = self.model.predict(df)
+        # Log DEBUG:  Prediction
         print(f"Prediction: {prediction}")
         return PredictionOutput(prediction=prediction)
+
 
 app = FastAPI()
 titanic_model = TitanicModel()
 
+
 @app.post("/prediction")
 async def prediction(
-    output: PredictionOutput = Depends(titanic_model.predict)) -> PredictionOutput:
+    output: PredictionOutput = Depends(titanic_model.predict),
+) -> PredictionOutput:
     return output
+
 
 @app.on_event("startup")
 async def startup():
+    # Possible Log: Try and Except
     titanic_model.load_model()
