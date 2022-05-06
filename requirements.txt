@@ -20,3 +20,4 @@ joblib
 pydantic
 uvicorn
 evidently
+black

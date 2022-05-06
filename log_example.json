@@ -1,0 +1,62 @@
+[
+    {
+        "id": "1",
+        "severity": "INFO",
+        "timestamp": "2022-04-21",
+        "payload": {
+            "modelId": "RandomForest",
+            "version": "20220505205301",
+            "inputRaw": [
+                {
+                    "pclass": 1,
+                    "name": "Allen, Miss. Elisabeth Walton",
+                    "sex": "female",
+                    "age": "29",
+                    "sibsp": 0,
+                    "parch": 0,
+                    "ticket": "24160",
+                    "fare": "211.3375",
+                    "cabin": "B5",
+                    "embarked": "S",
+                    "boat": "2",
+                    "body": "?",
+                    "home_dest": "St Louis, MO"
+                }
+            ],
+            "inputProcessed": "[2,3,4,5,1,23]",
+            "prediction": 0.23,
+            "executionTime": 0.5,
+            "memoryUsed": 1
+        }
+    },
+    {
+        "id": "2",
+        "severity": "INFO",
+        "timestamp": "2022-04-21",
+        "payload": {
+            "modelId": "RandomForest",
+            "version": "20220505205301",
+            "inputRaw": [
+                {
+                    "pclass": 1,
+                    "name": "Allen, Miss. Elisabeth Walton",
+                    "sex": "female",
+                    "age": "29",
+                    "sibsp": 0,
+                    "parch": 0,
+                    "ticket": "24160",
+                    "fare": "211.3375",
+                    "cabin": "B5",
+                    "embarked": "S",
+                    "boat": "2",
+                    "body": "?",
+                    "home_dest": "St Louis, MO"
+                }
+            ],
+            "inputProcessed": "[2,3,4,5,1,23]",
+            "prediction": 0.23,
+            "executionTime": 0.5,
+            "memoryUsed": 1
+        }
+    }
+]
