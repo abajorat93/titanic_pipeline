@@ -51,7 +51,7 @@ titanic_pipeline = Pipeline(
         ('regressor', regressor)
     ]
 )
-df = pd.read_csv(config.DATASET_FILE)
+df = pd.read_csv(config.DATASET_FILE).drop(columns='home.dest')
 
 X_train, X_test, y_train, y_test = train_test_split(
     df.drop(config.TARGET, axis=1), df[config.TARGET], test_size=0.2,
