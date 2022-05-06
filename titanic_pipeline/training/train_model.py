@@ -18,7 +18,7 @@ from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 
 from sklearn.model_selection import train_test_split
 from pathlib import Path
-CleaningTransformer.get_feature_names_out = (lambda self, names=None: self.feature_names_in_)
+
 numeric_transformer = Pipeline(steps=[
     ('missing_indicator', MissingIndicator(config.NUMERICAL_VARS)),
     ('median_imputation', NumericalImputesEncoder(config.NUMERICAL_VARS)),

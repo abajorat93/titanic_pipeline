@@ -7,7 +7,7 @@ URL = 'https://www.openml.org/data/get_csv/16826755/phpMYEkMl'
 SEED_SPLIT = 404
 SEED_MODEL = 404
 
-PRODUCTION_MODEL_NAME = 'RandomForest_Best'
+PRODUCTION_MODEL_NAME = 'LogReg_Best'
 STAGING_MODEL_NAME = 'RandomForest_Best'
 
 PRODUCTION_MODEL_DATA = BASE_DIR + f'/datasets/{PRODUCTION_MODEL_NAME}'
@@ -16,7 +16,7 @@ STAGING_MODEL_FILE = BASE_DIR + f'/models/{PRODUCTION_MODEL_NAME}.sav'
 
 DATASET_FILE = DATASETS_DIR + 'data.csv'
 
-MODEL_NAME = 'RandomForest'
+MODEL_NAME = 'LogReg'
 
 TARGET = 'survived'
 FEATURES = ['pclass', 'sex', 'age', 'sibsp', 'parch', 'fare', 'cabin', 'embarked', 'title']
