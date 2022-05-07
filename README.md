@@ -33,6 +33,10 @@
 }
 ```
 
+##
+Para usar los notebooks, se necesita instalar build con `pip install build`.
+Despues crea primero el paquete usando `python -m build` y despues instala el paquete de manera local con `pip install -e .`
+
 ## Lista de Logs
 | Path          | Description   | Severity   |
 | ------------- | ------------- | ------------- |
