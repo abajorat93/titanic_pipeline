@@ -16,7 +16,7 @@ import numpy as np
 from datetime import datetime
 
 
-from titanic_pipeline.config import config
+from titanic_pipeline import config
 from sklearn.pipeline import Pipeline
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
