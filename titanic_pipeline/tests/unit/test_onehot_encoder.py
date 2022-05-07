@@ -7,7 +7,7 @@
 from sre_constants import CATEGORY_UNI_LINEBREAK
 import pandas as pd
 import pytest
-from src.training.transformers import OneHotEncoder
+from titanic_pipeline.training.transformers import OneHotEncoder
 
 
 def obtener_datos_one_hot_encoder():
