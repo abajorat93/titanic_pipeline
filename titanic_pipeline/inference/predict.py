@@ -37,11 +37,14 @@ class TitanicModel:
     def predict(self, input: PredictionInput) -> PredictionOutput:
         """Runs a prediction"""
         print(f"Raw Input: {input.dict()}")
+        # LOG Aqui INFO
         df = pd.DataFrame([input.dict()])
         if not self.prod_model:
             raise RuntimeError("Model is not loaded")
         prediction = self.prod_model.predict(df)
         print(f"Prediction: {prediction}")
+        # LOG Aqui INFO
+
         return PredictionOutput(prediction=prediction)
 
 
