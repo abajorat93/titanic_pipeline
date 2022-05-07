@@ -12,7 +12,7 @@ import json
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
-formatter = logging.Formatter("%(asctime)s: %(name)s: %(message)s")
+formatter = logging.Formatter("%(asctime)s:%(name)s:%(message)s")
 
 file_handler = logging.FileHandler("prediction_api.log")
 file_handler.setFormatter(formatter)
@@ -53,8 +53,7 @@ class TitanicModel:
             raise RuntimeError("Model is not loaded")
         prediction = self.prod_model.predict(df)[0]
         results = {"input_raw": input.dict(), "prediction": str(prediction)}
-        print(results)
-        logger.info(f"Prediction: {json.dumps(results)}")
+        logger.info(f"Prediction:{json.dumps(results)}")
         return PredictionOutput(prediction=prediction)
 
 
