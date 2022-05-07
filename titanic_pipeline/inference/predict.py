@@ -6,6 +6,17 @@ from pydantic import BaseModel
 from fastapi import FastAPI, Depends, BackgroundTasks
 import pandas as pd
 from titanic_pipeline.config import config
+import logging
+import json
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+
+formatter = logging.Formatter("%(asctime)s: %(name)s: %(message)s")
+
+file_handler = logging.FileHandler("prediction_api.log")
+file_handler.setFormatter(formatter)
+logger.addHandler(file_handler)
 
 
 class PredictionInput(BaseModel):
@@ -36,15 +47,14 @@ class TitanicModel:
 
     def predict(self, input: PredictionInput) -> PredictionOutput:
         """Runs a prediction"""
-        print(f"Raw Input: {input.dict()}")
         # LOG Aqui INFO
         df = pd.DataFrame([input.dict()])
         if not self.prod_model:
             raise RuntimeError("Model is not loaded")
-        prediction = self.prod_model.predict(df)
-        print(f"Prediction: {prediction}")
-        # LOG Aqui INFO
-
+        prediction = self.prod_model.predict(df)[0]
+        results = {"input_raw": input.dict(), "prediction": str(prediction)}
+        print(results)
+        logger.info(f"Prediction: {json.dumps(results)}")
         return PredictionOutput(prediction=prediction)
 
 

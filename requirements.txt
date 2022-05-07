@@ -21,3 +21,4 @@ pydantic
 uvicorn
 evidently
 black
+build
